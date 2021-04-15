@@ -22,11 +22,10 @@ logger = logging.getLogger('alembic.env')
 # target_metadata = mymodel.Base.metadata
 from flask import current_app
 
-print(current_app.config)
 config.set_main_option('sqlalchemy.url',
                        current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].db.metadata
-
+schema_name='stories_schema'
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
@@ -79,6 +78,7 @@ def run_migrations_online():
             connection=connection,
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
+            version_table_schema=schema_name,
             **current_app.extensions['migrate'].configure_args
         )
 

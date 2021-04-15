@@ -13,4 +13,4 @@ then
 fi
 
 # Run server
-gunicorn -c gunicorn_config.py service.server:app
+gunicorn -c gunicorn_config.py service.server:app & celery -A task.celery.celery_app worker -l INFO
