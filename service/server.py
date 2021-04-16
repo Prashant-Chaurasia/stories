@@ -13,7 +13,7 @@ def create_app():
 
 
 def create_celery(app):
-    app.config['CELERY_BROKER_URL'] = os.environ.get('REDIS_URL', 'amqp://localhost:5672')
+    app.config['CELERY_BROKER_URL'] = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
     # create context tasks in celery
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'], include=['celery_tasks.tasks'])
     celery.conf.update(app.config)
