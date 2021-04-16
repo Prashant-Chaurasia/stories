@@ -2,11 +2,9 @@ from flask import Blueprint, request, jsonify
 from enum import Enum
 from http import HTTPStatus
 from . import state_machine as stories_sm
-
-
+from flask import send_file
 from PIL import Image
 import io, sys
-
 
 stories_resources = Blueprint('stories_resources', __name__)
 
@@ -35,4 +33,4 @@ def get_story(id):
     file = story.file
     print(sys.getsizeof(file))
 
-    return jsonify({'message': 'fine'}), HTTPStatus.OK
+    return send_file(io.BytesIO(file), attachment_filename=story.name, as_attachment=True)

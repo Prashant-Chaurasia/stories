@@ -26,7 +26,7 @@ def insert(grapher_name, file):
     story.created_at = datetime.utcnow()
     story.grapher_name = grapher_name
     story.name = file.filename
-    story.file_type = file.mimetype
+    story.file_type = file.mimetype.split('/')[0]
     story.description = 'This is a sample description'
     story.file = file.read()
 
@@ -39,9 +39,9 @@ def insert(grapher_name, file):
     del story.file
 
     # Checking the type and enqueueing a job
-    if story.file_type.split('/')[0] == 'image':
+    if story.file_type == 'image':
         process_image.delay(story.id)
-    elif story.file_type.split('/')[0] == 'video':
+    elif story.file_type == 'video':
         process_video.apply_async(args=[story.id], countdown=1)
 
     return story.serialize()

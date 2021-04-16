@@ -1,6 +1,7 @@
 from service import app, db
 import json
 from flask import jsonify, request
+from api.stories_module import stories_resources
 
 @app.after_request
 def add_header(response):
@@ -12,6 +13,5 @@ def index():
     response = jsonify({"message": "Service is ready!"})
     return response
 
-
-from api.stories_module import stories_resources 
+# Any url with /stories will be routed to the stories_resources
 app.register_blueprint(stories_resources, url_prefix='/stories')
