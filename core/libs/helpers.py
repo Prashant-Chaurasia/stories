@@ -6,3 +6,4 @@ def random_word(length):
 
 def generate_id(prefix):
 	return f'{prefix}{random_word(10)}'
+

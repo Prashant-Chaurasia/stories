@@ -4,7 +4,8 @@ from http import HTTPStatus
 from . import state_machine as stories_sm
 from flask import send_file
 from PIL import Image
-import io, sys
+import io
+from core.libs.constants import default_duration
 
 stories_resources = Blueprint('stories_resources', __name__)
 
@@ -19,7 +20,18 @@ def insert_stories():
     if grapher_name is None:
         return jsonify({'message': 'grapher_name is missing'}), HTTPStatus.BAD_REQUEST
     
-    story = stories_sm.insert(grapher_name, file)
+    # Received attributes 
+    data = {
+        'grapher_name': grapher_name,
+        'description': request.form.get('description'),
+        'name': request.form.get('name'),
+        'duration': request.form.get('duration', default_duration),
+        'file_type': request.form.get('type'),
+        'latitude': request.form.get('latitude'),
+        'longitude': request.form.get('longitude')
+    }
+    
+    story = stories_sm.insert(file, data)
     return story, HTTPStatus.OK
 
 @stories_resources.route('', methods=['GET'], strict_slashes=False)
@@ -31,6 +43,4 @@ def get_all_stories():
 def get_story(id):
     story = stories_sm.get_by_id(id)
     file = story.file
-    print(sys.getsizeof(file))
-
     return send_file(io.BytesIO(file), attachment_filename=story.name, as_attachment=True)

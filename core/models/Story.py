@@ -1,6 +1,6 @@
-from service import db
+from service.server import db
 import datetime
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Numeric, String
 from sqlalchemy.dialects.postgresql import JSONB, TIMESTAMP, BYTEA
 
 class Story(db.Model):
@@ -12,12 +12,12 @@ class Story(db.Model):
     grapher_name = Column(String)
     name = Column(String(255))
     description = Column(String)
-    duration = Column(Integer)
-    file_type = Column(String(20))
+    duration = Column(Numeric)
     state = Column(String(20))
     file = Column(BYTEA)
-    # lattitude = Column(Boolean)
-    # longitude = Column(TIMESTAMP)
+    file_type = Column(String(20))
+    latitude = Column(Numeric)
+    longitude = Column(Numeric)
     
     def serialize(self):
         self.__dict__.pop('_sa_instance_state')

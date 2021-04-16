@@ -1,5 +1,7 @@
 *~
 *.pyc
 __pycache__
+.pytest_cache
 env_variable.sh
 venv
+.DS_Store
