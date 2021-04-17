@@ -1,5 +1,4 @@
 alembic==1.5.8
-amqp==5.0.6
 attrs==20.3.0
 billiard==3.6.4.0
 celery==5.0.5
@@ -29,7 +28,7 @@ MarkupSafe==1.1.1
 moviepy==1.0.3
 numpy==1.20.2
 packaging==20.9
-Pillow==8.2.0
+Pillow==6.2.1
 pluggy==0.13.1
 proglog==0.1.9
 prompt-toolkit==3.0.18
@@ -40,6 +39,7 @@ pytest==6.2.3
 python-dateutil==2.8.1
 python-editor==1.0.4
 pytz==2021.1
+redis
 requests==2.25.1
 six==1.15.0
 SQLAlchemy==1.4.7

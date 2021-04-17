@@ -5,7 +5,7 @@ from . import state_machine as stories_sm
 from flask import send_file
 from PIL import Image
 import io
-from core.libs.constants import default_duration
+from core.libs.constants import default_duration, State
 
 stories_resources = Blueprint('stories_resources', __name__)
 
@@ -42,5 +42,10 @@ def get_all_stories():
 @stories_resources.route('/<id>', methods=['GET'], strict_slashes=False)
 def get_story(id):
     story = stories_sm.get_by_id(id)
+    
+    # Not returning the file till it is processed. 
+    if (story.state == State.UPLOADED.value):
+        return jsonify({'message': 'The story is being processed, please retry after sometime!'}), HTTPStatus.OK
+
     file = story.file
     return send_file(io.BytesIO(file), attachment_filename=story.name, as_attachment=True)

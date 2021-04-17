@@ -54,6 +54,6 @@ def process_video(story_id):
     with app.app_context():
         story = Story.query.filter(Story.id == story_id).first()
         story.file = resize_video(story_id, story.file, 640)
-        story.state = state.PROCESSED.value
+        story.state = State.PROCESSED.value
         db.session.commit()
     return True

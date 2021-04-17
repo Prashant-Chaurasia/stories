@@ -13,7 +13,7 @@ then
 fi
 
 # Run all the tests
-# pytest -v
+pytest -v
 
 # Run server
 gunicorn -c gunicorn_config.py service.server:app & celery -A service.server.celery_app worker --concurrency=1 -l INFO
